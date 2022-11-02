@@ -17,3 +17,14 @@
 .mt-50 {
   margin-top: 50px;
 }
+.text-align-center {
+  text-align: center;
+}
+.logout-btn {
+  cursor: pointer;
+  font-size: 25px;
+}
+.login-user-name {
+  margin-right: 20px;
+  font-size: 21px;
+}
