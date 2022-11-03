@@ -35,11 +35,8 @@
 </template>
 
 <script>
-import { Loading, Notify } from 'quasar';
-
-import { mapActions } from 'pinia';
-import { authUserStore } from '../stores/user-authentication';
-
+import Cookies from 'js-cookie';
+import { Loading, Notify } from 'quasar'
 export default {
   name: 'LoginPage',
   data() {
@@ -48,12 +45,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(authUserStore, ['loginUser']),
     async submitLoginData() {
       Loading.show();
       try {
-        let result = await this.$api.post("/auth/login", this.loginData);
-        this.loginUser(result.data);
+        let result = await this.$api.post('/auth/login', this.loginData);
+        Cookies.set('Token', result.data.tokens.access.token);
         this.$router.push('/');
       } catch (error) {
         Notify.create({
@@ -68,6 +64,5 @@ export default {
       return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
     }
   }
-
 }
 </script>

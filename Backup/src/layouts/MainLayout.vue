@@ -16,7 +16,7 @@
         </q-toolbar-title>
 
         <div class="login-user-name">
-          {{ getAuthUser.name }}
+          Kaleem Khan
         </div>
         <div class="login-user-name">
           |
@@ -58,17 +58,13 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import EssentialLink from 'components/EssentialLink.vue'
 
-import { mapState, mapActions } from 'pinia';
-import { authUserStore } from '../stores/user-authentication'
 export default {
   name: 'MainLayout',
   components: {
     EssentialLink
-  },
-  computed: {
-    ...mapState(authUserStore, ['getAuthUser']),
   },
   data() {
     return {
@@ -120,12 +116,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(authUserStore, ['logoutUser']),
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen
     },
     logout() {
-      this.logoutUser();
+      Cookies.remove('Token');
       this.$router.push('/login');
     }
   }

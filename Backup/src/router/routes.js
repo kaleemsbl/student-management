@@ -4,7 +4,7 @@ import MainLayout from "layouts/MainLayout.vue";
 import LoginLayout from "layouts/LoginLayout.vue";
 
 function authenticationRequire(to, from, next) {
-  let token = Cookies.get("token");
+  let token = Cookies.get("Token");
   if (!token) {
     next("/login");
   } else {
@@ -13,7 +13,7 @@ function authenticationRequire(to, from, next) {
 }
 
 function ifLoginRedirectToHome(to, from, next) {
-  let token = Cookies.get("token");
+  let token = Cookies.get("Token");
   if (token) {
     next("/");
   } else {
