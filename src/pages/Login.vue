@@ -14,13 +14,21 @@
             <q-form @submit="submitLoginData">
         
               <q-input v-model="loginData.email" :rules="[
-                (val) => (val && val != '') || 'This field is required!',
-                (val) => validateEmail(val) || 'Must be a valid email.',
-              ]" label="Email" hint="Enter Your Email" />
-        
+                  (val) => (val && val != '') || 'This field is required!',
+                  (val) => validateEmail(val) || 'Must be a valid email.',
+                ]" label="Email" hint="Enter Your Email" >
+                <template v-slot:append>
+                  <q-icon name="email"/>
+                </template>
+              </q-input>
+              
               <q-input v-model="loginData.password" :rules="[
-                (val) => (val && val != '') || 'This field is required!',
-              ]" label="Password" type="password" hint="Password" />
+                  (val) => (val && val != '') || 'This field is required!',
+                ]" label="Password" :type="passwordType" hint="Password">
+                <template v-slot:append>
+                  <q-icon :name="passwordIcon" @click="showPassword" class="cursor-pointer" />
+                </template>
+              </q-input>
         
               <q-btn class="full-width" color="purple mt-50" label="Login" type="submit" />
         
@@ -45,6 +53,8 @@ export default {
   data() {
     return {
       loginData: {},
+      passwordType: 'password',
+      passwordIcon: 'visibility_off'
     }
   },
   methods: {
@@ -66,6 +76,10 @@ export default {
     },
     validateEmail(email) {
       return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
+    },
+    showPassword() {
+      this.passwordType = this.passwordType == 'text' ? 'password' : 'text';
+      this.passwordIcon = this.passwordType == 'text' ? 'visibility' : 'visibility_off'
     }
   }
 

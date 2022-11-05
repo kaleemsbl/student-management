@@ -28,3 +28,6 @@
   margin-right: 20px;
   font-size: 21px;
 }
+.cursor-pointer {
+  cursor: pointer;
+}

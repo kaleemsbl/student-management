@@ -31,5 +31,8 @@ export const authUserStore = defineStore("user", {
       this.refreshToken = "";
       Cookies.remove("token");
     },
+    updateUser(data) {
+      this.data = data;
+    },
   },
 });

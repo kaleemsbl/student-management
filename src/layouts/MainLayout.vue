@@ -74,10 +74,16 @@ export default {
     return {
       essentialLinks: [
         {
-          title: 'Docs',
-          caption: 'quasar.dev',
+          title: 'Home',
+          caption: 'Home',
+          icon: 'home',
+          link: '/'
+        },
+        {
+          title: 'Register Teacher',
+          caption: 'Register Teacher',
           icon: 'school',
-          link: 'https://quasar.dev'
+          link: '/admin/teacher/register'
         },
         {
           title: 'Github',
