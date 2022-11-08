@@ -88,6 +88,7 @@ module.exports = configure(function (/* ctx */) {
 
       env: {
         API: "https://shakeel-rest-api.herokuapp.com/v1",
+        API_LOCAL: "http://localhost:5000/v1",
       },
     },
 
