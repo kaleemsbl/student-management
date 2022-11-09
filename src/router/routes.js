@@ -35,9 +35,9 @@ const routes = [
     beforeEnter: [ifLoginRedirectToHome],
   },
   {
-    path: "/admin/teacher/register",
+    path: "/admin/teachers",
     component: MainLayout,
-    children: [{ path: "", component: () => import("pages/teacher/RegisterTeacher.vue") }],
+    children: [{ path: "", component: () => import("pages/teacher/Teacher.vue") }],
     beforeEnter: [authenticationRequire],
   },
 

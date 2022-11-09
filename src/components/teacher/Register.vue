@@ -1,8 +1,7 @@
 <template>
-  <div style="width: 60%; margin: auto;" class="q-pa-lg">
+  <div class="q-pa-lg">
     <div class="row">
       <div class="col">
-        <h5>Register Teacher</h5>
         <q-form>
           <q-input
             v-model="registerData.firstname"
@@ -88,7 +87,7 @@
 </template>
 <script>
 import { Loading, Notify } from 'quasar';
-import TeacherValidationMixin from '../../mixins/validations/teacher-validation'
+import TeacherValidationMixin from '../../mixins/validations/teacher-validation';
 export default {
   data() {
     return {

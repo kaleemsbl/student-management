@@ -80,10 +80,10 @@ export default {
           link: '/'
         },
         {
-          title: 'Register Teacher',
-          caption: 'Register Teacher',
+          title: 'Teachers',
+          caption: 'Teachers',
           icon: 'school',
-          link: '/admin/teacher/register'
+          link: '/admin/teachers'
         },
         {
           title: 'Github',
