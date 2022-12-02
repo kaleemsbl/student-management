@@ -7,16 +7,18 @@
             v-model="registerData.firstname"
             type="text"
             label="First Name *"
+       
             >
           </q-input>
           <span class="mandatory" v-for="error of v$.registerData.firstname.$errors" :key="error">
-            {{ error.$message }}
+            {{ error.$message}}
           </span>
 
           <q-input
             v-model="registerData.lastname"
             type="text"
             label="Last Name *"
+       
             >
           </q-input>
           <span class="mandatory" v-for="error of v$.registerData.lastname.$errors" :key="error">
