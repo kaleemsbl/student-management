@@ -40,6 +40,12 @@ const routes = [
     children: [{ path: "", component: () => import("pages/teacher/Teacher.vue") }],
     beforeEnter: [authenticationRequire],
   },
+  {
+    path: "/admin/students",
+    component: MainLayout,
+    children: [{ path: "", component: () => import("pages/student/StudentList.vue") }],
+    beforeEnter: [authenticationRequire],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

@@ -86,10 +86,10 @@ export default {
           link: '/admin/teachers'
         },
         {
-          title: 'Github',
-          caption: 'github.com/quasarframework',
-          icon: 'code',
-          link: 'https://github.com/quasarframework'
+          title: 'Students',
+          caption: 'Students',
+          icon: 'person',
+          link: '/admin/students'
         },
         {
           title: 'Discord Chat Channel',
