@@ -44,6 +44,7 @@
 
 <script>
 import { Loading, Notify } from 'quasar';
+import Cookies from "js-cookie";
 
 import { mapActions } from 'pinia';
 import { authUserStore } from '../stores/user-authentication';
@@ -64,6 +65,7 @@ export default {
       try {
         let result = await this.$api.post("/auth/login", this.loginData);
         this.loginUser(result.data);
+        this.$api.defaults.headers.common['Authorization'] = "Bearer " + Cookies.get('token');
         this.$router.push('/');
       } catch (error) {
         Notify.create({

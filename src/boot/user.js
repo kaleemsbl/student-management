@@ -3,24 +3,29 @@ import { api } from "./axios";
 import { authUserStore } from "../stores/user-authentication";
 import Cookies from "js-cookie";
 
-export default boot(async ({ store }) => {
+export default boot(async ({ redirect, store }) => {
   try {
     const token = Cookies.get("token");
     if (token) {
-      // let result = await api.post("/auth/login", {});
+      api.defaults.headers.common['Authorization'] = "Bearer " + Cookies.get('token');
+      let result = await api.get("/auth/get-user-by-token");
       const userStore = authUserStore(store); // whole user store
-
       userStore.updateUser({
-        role: "user",
-        isEmailVerified: false,
-        name: "Fake User",
-        email: "fake@example.com",
-        id: "62fa7394cc1f9000226f9322",
+        role: result.data.role,
+        isEmailVerified: result.data.isEmailVerified,
+        name: result.data.name,
+        email: result.data.email,
+        id: result.data.id,
       });
       console.log("Page Hard Refresh - State Updated!");
     }
   } catch (error) {
     console.log(error.response.data.message);
+    if(error.response.status == 401) {
+      console.log(error.response.status);
+      Cookies.remove('token');
+      redirect({ path: '/login' });
+    }
   }
 
   // Set i18n instance on app

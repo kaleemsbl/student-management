@@ -34,6 +34,15 @@ export default {
           maxLength: maxLength(10),
           minLength: minLength(10)
         },
+        qualification: {
+          required
+        },
+        designation: {
+          required
+        },
+        primary: {
+          required
+        },
         address: {
           required
         }

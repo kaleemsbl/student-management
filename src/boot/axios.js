@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 const api = axios.create({ baseURL: process.env.API_LOCAL });
 
 
-api.defaults.headers.common['Authorization'] = "Bearer " + Cookies.get('token');
+// api.defaults.headers.common['Authorization'] = "Bearer " + Cookies.get('token');
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

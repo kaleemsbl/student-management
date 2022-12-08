@@ -66,6 +66,50 @@
           </span>
 
           <q-input
+            v-model="registerData.qualification"
+            type="text"
+            label="Qualification *"
+            >
+          </q-input>
+          <span class="mandatory" v-for="error of v$.registerData.qualification.$errors" :key="error">
+            {{ error.$message }}
+          </span>
+
+          <q-input
+            v-model="registerData.designation"
+            type="text"
+            label="Designation *"
+            >
+          </q-input>
+          <span class="mandatory" v-for="error of v$.registerData.designation.$errors" :key="error">
+            {{ error.$message }}
+          </span>
+
+          <q-input
+            v-model="registerData.isClassTeacher"
+            type="text"
+            label="Class Teacher"
+            >
+          </q-input>
+
+          <q-input
+            v-model="registerData.primary"
+            type="text"
+            label="Primary Skills *"
+            >
+          </q-input>
+          <span class="mandatory" v-for="error of v$.registerData.primary.$errors" :key="error">
+            {{ error.$message }}
+          </span>
+
+          <q-input
+            v-model="registerData.secondary"
+            type="text"
+            label="Secondary Skills"
+            >
+          </q-input>
+
+          <q-input
             v-model="registerData.address"
             type="textarea"
             label="Address *"
@@ -106,12 +150,19 @@ export default {
     },
     async sendDataToServer(data) {
       const finalData = {
-        name: data.firstName + ' ' + data.lastname,
+        name: data.firstname + ' ' + data.lastname,
         email: data.email,
         role: 'teacher',
         password: data.password,
         mobile: data.mobile,
-        addres: data.addres
+        qualification: data.qualification,
+        designation: data.designation,
+        isClassTeacher: data.isClassTeacher,
+        skills: {
+          primary: data.primary ? data.primary.split(',') : [],
+          secondary: data.secondary ? data.secondary.split(',') : [],
+        },
+        address: data.address
       }
       Loading.show();
       try {
