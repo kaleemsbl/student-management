@@ -134,6 +134,9 @@
 <script>
 import { Loading, Notify } from 'quasar';
 import TeacherValidationMixin from '../../mixins/validations/teacher-validation';
+
+import { mapActions } from 'pinia';
+import { commonStore } from '../../stores/common.js';
 export default {
   data() {
     return {
@@ -142,10 +145,10 @@ export default {
   },
   mixins: [TeacherValidationMixin],
   methods: {
+    ...mapActions(commonStore, ['updateData']),
     async teacherFormSubmit() {
       let isFormCorrect = await this.v$.$validate();
       if (!isFormCorrect) return
-
       this.sendDataToServer(this.registerData)
     },
     async sendDataToServer(data) {
@@ -167,6 +170,8 @@ export default {
       Loading.show();
       try {
         let result = await this.$api.post("/users", finalData);
+        console.log('Created - ', result.data);
+        this.updateData({isCreated: true});
       } catch (error) {
         Notify.create({
           position: 'top-right',

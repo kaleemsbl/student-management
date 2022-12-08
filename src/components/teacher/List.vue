@@ -100,7 +100,7 @@
         </q-header>
         <q-page padding>
           <!-- Teacher full details component -->
-          <TeacherDetail :teacher="singleTeacherDetail"></TeacherDetail>
+          <TeacherDetail :teacher="singleTeacherDetail" @isCreated="isCreated"></TeacherDetail>
         </q-page>
       </q-layout>
     </q-dialog>
@@ -110,6 +110,9 @@
 <script>
 import Register from "./Register.vue";
 import TeacherDetail from "./DetailsModel.vue";
+import { Notify } from 'quasar';
+import { mapState, mapActions } from 'pinia';
+import { commonStore } from '../../stores/common.js';
 export default {
   name: "Teacher",
   components: {
@@ -181,164 +184,22 @@ export default {
           label: "Actions",
         },
       ],
-      rows: [
-        {
-          name: "Kaleem Khan",
-          email: "kaleemk@yopmail.com",
-          mobile: "9876543210",
-          qualification: "M.com",
-          designation: "Teacher",
-          classTeacher: "11th",
-
-          address: "Asrafpur, Nagli",
-        },
-        {
-          name: "Shahnawaz Khan",
-          email: "sk@yopmail.com",
-          mobile: "8876543210",
-          qualification: "M.sc",
-          designation: "Teacher",
-          classTeacher: "12th",
-          skills: {
-            primary: ["Math"],
-            secondary: ["Physics", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Shahrukh Khan",
-          email: "srk@yopmail.com",
-          mobile: "8886543210",
-          qualification: "B.Tech",
-          designation: "Teacher",
-          classTeacher: "",
-          skills: {
-            primary: ["Physics"],
-            secondary: ["Math", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Kaleem Khan",
-          email: "kaleemk@yopmail.com",
-          mobile: "9876543210",
-          qualification: "M.com",
-          designation: "Teacher",
-          classTeacher: "11th",
-          skills: {
-            primary: ["Acounts", "frsdf"],
-            secondary: ["Stastics", "Economics"],
-          },
-          address: "Asrafpur, Nagli",
-        },
-        {
-          name: "Shahnawaz Khan",
-          email: "sk@yopmail.com",
-          mobile: "8876543210",
-          qualification: "M.sc",
-          designation: "Teacher",
-          classTeacher: "12th",
-          skills: {
-            primary: ["Math"],
-            secondary: ["Physics", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Shahrukh Khan",
-          email: "srk@yopmail.com",
-          mobile: "8886543210",
-          qualification: "B.Tech",
-          designation: "Teacher",
-          classTeacher: "",
-          skills: {
-            primary: ["Physics"],
-            secondary: ["Math", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Kaleem Khan",
-          email: "kaleemk@yopmail.com",
-          mobile: "9876543210",
-          qualification: "M.com",
-          designation: "Teacher",
-          classTeacher: "11th",
-          skills: {
-            primary: ["Acounts", "frsdf"],
-            secondary: ["Stastics", "Economics"],
-          },
-          address: "Asrafpur, Nagli",
-        },
-        {
-          name: "Shahnawaz Khan",
-          email: "sk@yopmail.com",
-          mobile: "8876543210",
-          qualification: "M.sc",
-          designation: "Teacher",
-          classTeacher: "12th",
-          skills: {
-            primary: ["Math"],
-            secondary: ["Physics", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Shahrukh Khan",
-          email: "srk@yopmail.com",
-          mobile: "8886543210",
-          qualification: "B.Tech",
-          designation: "Teacher",
-          classTeacher: "",
-          skills: {
-            primary: ["Physics"],
-            secondary: ["Math", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Kaleem Khan",
-          email: "kaleemk@yopmail.com",
-          mobile: "9876543210",
-          qualification: "M.com",
-          designation: "Teacher",
-          classTeacher: "11th",
-          skills: {
-            primary: ["Acounts", "frsdf"],
-            secondary: ["Stastics", "Economics"],
-          },
-          address: "Asrafpur, Nagli",
-        },
-        {
-          name: "Shahnawaz Khan",
-          email: "sk@yopmail.com",
-          mobile: "8876543210",
-          qualification: "M.sc",
-          designation: "Teacher",
-          classTeacher: "12th",
-          skills: {
-            primary: ["Math"],
-            secondary: ["Physics", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-        {
-          name: "Shahrukh Khan",
-          email: "srk@yopmail.com",
-          mobile: "8886543210",
-          qualification: "B.Tech",
-          designation: "Teacher",
-          classTeacher: "",
-          skills: {
-            primary: ["Physics"],
-            secondary: ["Math", "Chemistery"],
-          },
-          address: "Sambhal Niyawali",
-        },
-      ],
+      rows: [],
     };
   },
+  computed: {
+    ...mapState(commonStore, ['getData']),
+  },
+  watch: {
+    getData(newData, oldData) {
+      if (newData?.isCreated == true) this.isCreated(newData);
+    }
+  },
+  async created() {
+    this.getTeachers();
+  },
   methods: {
+    ...mapActions(commonStore, ['updateData']),
     formatSkills(skills) {
       const skillArr = skills ? skills : [];
       return skillArr.length > 0 ? skillArr.join(", ") : "Not Available";
@@ -347,7 +208,20 @@ export default {
       this.singleTeacherDetail = { ...data };
       this.isOpenDetails = !this.isOpenDetails;
     },
-  },
+    async getTeachers() {
+      const response = await this.$api.get('/users/teachers');
+      this.rows = response.data;
+    },
+    isCreated(data) {
+      this.isOpen = false;
+      this.updateData(null);
+      Notify.create({
+        type: 'positive',
+        message: 'Teacher Created!'
+      });
+      this.getTeachers();
+    }
+  }
 };
 </script>
 
