@@ -26,7 +26,7 @@
             </tr>
             <tr class="">
               <td class="text-left"><strong>Class Teacher</strong></td>
-              <td class="text-center">{{ teacher.classTeacher }}</td>
+              <td class="text-center">{{ teacher.isClassTeacher }}</td>
             </tr>
             <tr class="">
               <td class="text-left"><strong>Skills</strong></td>

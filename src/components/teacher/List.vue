@@ -100,7 +100,7 @@
         </q-header>
         <q-page padding>
           <!-- Teacher full details component -->
-          <TeacherDetail :teacher="singleTeacherDetail" @isCreated="isCreated"></TeacherDetail>
+          <TeacherDetail :teacher="singleTeacherDetail" ></TeacherDetail>
         </q-page>
       </q-layout>
     </q-dialog>
